@@ -2,286 +2,147 @@
    V LUXE DENTAL ATELIER
 ===================================================== */
 
-
-/* =====================================================
-   MOBILE MENU
-===================================================== */
-
-const menuButton =
-    document.getElementById("menuButton");
-
-const mobileMenu =
-    document.getElementById("mobileMenu");
+document.addEventListener("DOMContentLoaded", function () {
 
 
-if (menuButton && mobileMenu) {
+    /* =================================================
+       MOBILE MENU
+    ================================================= */
 
-    menuButton.addEventListener(
-        "click",
-        () => {
+    const mobileMenuButton =
+        document.getElementById("mobileMenuButton");
 
-            mobileMenu.classList.toggle(
-                "open"
-            );
-
-        }
-    );
+    const mobileMenu =
+        document.getElementById("mobileMenu");
 
 
-    document
-        .querySelectorAll(
-            ".mobile-menu a"
-        )
-        .forEach(link => {
+    if (
+        mobileMenuButton &&
+        mobileMenu
+    ) {
 
-            link.addEventListener(
-                "click",
-                () => {
+        mobileMenuButton.addEventListener(
+            "click",
+            function () {
 
-                    mobileMenu.classList.remove(
-                        "open"
-                    );
-
-                }
-            );
-
-        });
-
-}
+                const isOpen =
+                    mobileMenu.classList.toggle("open");
 
 
-/* =====================================================
-   DOCTORS EXPAND / COLLAPSE
-===================================================== */
-
-const doctorsToggle =
-    document.getElementById(
-        "doctorsToggle"
-    );
-
-const doctorsContainer =
-    document.getElementById(
-        "doctorsContainer"
-    );
-
-const toggleText =
-    doctorsToggle
-        ? doctorsToggle.querySelector(
-            ".toggle-text"
-        )
-        : null;
-
-
-if (
-    doctorsToggle &&
-    doctorsContainer
-) {
-
-    doctorsToggle.addEventListener(
-        "click",
-        () => {
-
-            const isOpen =
-                doctorsContainer.classList.toggle(
-                    "open"
+                mobileMenuButton.setAttribute(
+                    "aria-expanded",
+                    isOpen ? "true" : "false"
                 );
 
-
-            doctorsToggle.classList.toggle(
-                "active",
-                isOpen
-            );
-
-
-            if (toggleText) {
-
-                toggleText.textContent =
-                    isOpen
-                        ? "Hide Our Doctors"
-                        : "View Our Doctors";
-
             }
-
-        }
-    );
-
-}
+        );
 
 
-/* =====================================================
-   SCROLL REVEAL
-===================================================== */
+        mobileMenu
+            .querySelectorAll("a")
+            .forEach(function (link) {
 
-const revealElements =
-    document.querySelectorAll(
-        ".reveal"
-    );
+                link.addEventListener(
+                    "click",
+                    function () {
 
-
-const revealObserver =
-    new IntersectionObserver(
-
-        entries => {
-
-            entries.forEach(
-                entry => {
-
-                    if (
-                        entry.isIntersecting
-                    ) {
-
-                        entry.target.classList.add(
-                            "visible"
+                        mobileMenu.classList.remove(
+                            "open"
                         );
 
-
-                        revealObserver.unobserve(
-                            entry.target
+                        mobileMenuButton.setAttribute(
+                            "aria-expanded",
+                            "false"
                         );
 
                     }
+                );
+
+            });
+
+    }
+
+
+    /* =================================================
+       DOCTORS EXPAND / COLLAPSE
+    ================================================= */
+
+    const teamToggle =
+        document.getElementById("teamToggle");
+
+    const teamContainer =
+        document.getElementById("teamContainer");
+
+    const teamToggleText =
+        document.getElementById("teamToggleText");
+
+
+    if (
+        teamToggle &&
+        teamContainer
+    ) {
+
+        teamToggle.addEventListener(
+            "click",
+            function () {
+
+                const isOpen =
+                    teamContainer.classList.toggle("open");
+
+
+                teamToggle.classList.toggle(
+                    "active",
+                    isOpen
+                );
+
+
+                teamToggle.setAttribute(
+                    "aria-expanded",
+                    isOpen ? "true" : "false"
+                );
+
+
+                if (teamToggleText) {
+
+                    teamToggleText.textContent =
+                        isOpen
+                            ? "Hide Our Doctors"
+                            : "Meet Our Team of Specialists";
 
                 }
-            );
 
-        },
-
-        {
-            threshold: 0.12
-        }
-
-    );
-
-
-revealElements.forEach(
-    element => {
-
-        revealObserver.observe(
-            element
+            }
         );
 
     }
-);
 
 
-/* =====================================================
-   VIDEO AUTOPLAY
-===================================================== */
+    /* =================================================
+       SMOOTH SCROLL
+    ================================================= */
 
-const videos =
-    document.querySelectorAll(
-        "video"
-    );
+    document
+        .querySelectorAll('a[href^="#"]')
+        .forEach(function (link) {
 
-
-videos.forEach(
-    video => {
-
-        video.muted = true;
-
-        video.playsInline = true;
-
-
-        const playPromise =
-            video.play();
-
-
-        if (
-            playPromise !== undefined
-        ) {
-
-            playPromise.catch(
-                () => {
-
-                    /*
-                     * Mobile browsers may
-                     * occasionally block autoplay.
-                     *
-                     * Muted + playsinline normally
-                     * allows autoplay.
-                     */
-
-                }
-            );
-
-        }
-
-    }
-);
-
-
-/* =====================================================
-   HEADER SHADOW
-===================================================== */
-
-const header =
-    document.querySelector(
-        ".header"
-    );
-
-
-window.addEventListener(
-    "scroll",
-    () => {
-
-        if (!header) {
-            return;
-        }
-
-
-        if (
-            window.scrollY > 30
-        ) {
-
-            header.style.boxShadow =
-                "0 10px 30px rgba(0,0,0,.05)";
-
-        } else {
-
-            header.style.boxShadow =
-                "none";
-
-        }
-
-    }
-);
-
-
-/* =====================================================
-   SMOOTH ANCHOR NAVIGATION
-===================================================== */
-
-document
-    .querySelectorAll(
-        'a[href^="#"]'
-    )
-    .forEach(
-        anchor => {
-
-            anchor.addEventListener(
+            link.addEventListener(
                 "click",
-                function(event) {
+                function (event) {
 
                     const targetId =
-                        this.getAttribute(
-                            "href"
-                        );
+                        this.getAttribute("href");
 
 
                     if (
-                        targetId === "#" ||
-                        !targetId
+                        !targetId ||
+                        targetId === "#"
                     ) {
-
                         return;
-
                     }
 
 
                     const target =
-                        document.querySelector(
-                            targetId
-                        );
+                        document.querySelector(targetId);
 
 
                     if (!target) {
@@ -292,22 +153,20 @@ document
                     event.preventDefault();
 
 
-                    const headerElement =
+                    const header =
                         document.querySelector(
-                            ".header"
+                            ".site-header"
                         );
 
 
                     const headerHeight =
-                        headerElement
-                            ? headerElement.offsetHeight
+                        header
+                            ? header.offsetHeight
                             : 0;
 
 
-                    const targetPosition =
-                        target
-                            .getBoundingClientRect()
-                            .top
+                    const position =
+                        target.getBoundingClientRect().top
                         +
                         window.scrollY
                         -
@@ -316,16 +175,93 @@ document
 
                     window.scrollTo({
 
-                        top:
-                            targetPosition,
+                        top: position,
 
-                        behavior:
-                            "smooth"
+                        behavior: "smooth"
 
                     });
 
                 }
             );
 
+        });
+
+
+    /* =================================================
+       VIDEO AUTOPLAY
+    ================================================= */
+
+    document
+        .querySelectorAll("video")
+        .forEach(function (video) {
+
+            video.muted = true;
+
+            video.playsInline = true;
+
+
+            const promise =
+                video.play();
+
+
+            if (promise !== undefined) {
+
+                promise.catch(function () {
+
+                    /*
+                     * Some mobile browsers can
+                     * temporarily block autoplay.
+                     *
+                     * The video remains available
+                     * as a normal HTML5 video.
+                     */
+
+                });
+
+            }
+
+        });
+
+
+    /* =================================================
+       HEADER SCROLL EFFECT
+    ================================================= */
+
+    const header =
+        document.querySelector(".site-header");
+
+
+    if (header) {
+
+        function updateHeader() {
+
+            if (window.scrollY > 30) {
+
+                header.style.boxShadow =
+                    "0 10px 35px rgba(0,0,0,.07)";
+
+            } else {
+
+                header.style.boxShadow =
+                    "none";
+
+            }
+
         }
-    );
+
+
+        updateHeader();
+
+
+        window.addEventListener(
+            "scroll",
+            updateHeader,
+            {
+                passive: true
+            }
+        );
+
+    }
+
+
+});
