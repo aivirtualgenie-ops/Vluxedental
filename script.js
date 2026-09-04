@@ -1,8 +1,40 @@
 /* =====================================================
    V LUXE DENTAL ATELIER
+   INTERACTION SYSTEM
 ===================================================== */
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
+
+    /* =================================================
+       HEADER
+    ================================================= */
+
+    const header =
+        document.querySelector(".site-header");
+
+
+    const updateHeader = () => {
+
+        if (!header) return;
+
+        header.classList.toggle(
+            "scrolled",
+            window.scrollY > 25
+        );
+
+    };
+
+
+    updateHeader();
+
+
+    window.addEventListener(
+        "scroll",
+        updateHeader,
+        {
+            passive: true
+        }
+    );
 
 
     /* =================================================
@@ -23,15 +55,29 @@ document.addEventListener("DOMContentLoaded", function () {
 
         mobileMenuButton.addEventListener(
             "click",
-            function () {
+            () => {
 
                 const isOpen =
                     mobileMenu.classList.toggle("open");
 
 
+                mobileMenuButton.classList.toggle(
+                    "active",
+                    isOpen
+                );
+
+
                 mobileMenuButton.setAttribute(
                     "aria-expanded",
-                    isOpen ? "true" : "false"
+                    String(isOpen)
+                );
+
+
+                mobileMenuButton.setAttribute(
+                    "aria-label",
+                    isOpen
+                        ? "Close menu"
+                        : "Open menu"
                 );
 
             }
@@ -40,19 +86,28 @@ document.addEventListener("DOMContentLoaded", function () {
 
         mobileMenu
             .querySelectorAll("a")
-            .forEach(function (link) {
+            .forEach(link => {
 
                 link.addEventListener(
                     "click",
-                    function () {
+                    () => {
 
                         mobileMenu.classList.remove(
                             "open"
                         );
 
+                        mobileMenuButton.classList.remove(
+                            "active"
+                        );
+
                         mobileMenuButton.setAttribute(
                             "aria-expanded",
                             "false"
+                        );
+
+                        mobileMenuButton.setAttribute(
+                            "aria-label",
+                            "Open menu"
                         );
 
                     }
@@ -64,7 +119,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =================================================
-       DOCTORS EXPAND / COLLAPSE
+       TEAM ACCORDION
     ================================================= */
 
     const teamToggle =
@@ -84,7 +139,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         teamToggle.addEventListener(
             "click",
-            function () {
+            () => {
 
                 const isOpen =
                     teamContainer.classList.toggle("open");
@@ -98,7 +153,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 teamToggle.setAttribute(
                     "aria-expanded",
-                    isOpen ? "true" : "false"
+                    String(isOpen)
                 );
 
 
@@ -106,8 +161,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     teamToggleText.textContent =
                         isOpen
-                            ? "Hide Our Doctors"
-                            : "Meet Our Team of Specialists";
+                            ? "Hide Our Team"
+                            : "Meet Our Team";
 
                 }
 
@@ -118,19 +173,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =================================================
-       SMOOTH SCROLL
+       SMOOTH ANCHOR SCROLLING
     ================================================= */
 
     document
         .querySelectorAll('a[href^="#"]')
-        .forEach(function (link) {
+        .forEach(link => {
 
             link.addEventListener(
                 "click",
-                function (event) {
+                event => {
 
                     const targetId =
-                        this.getAttribute("href");
+                        link.getAttribute("href");
 
 
                     if (
@@ -153,29 +208,35 @@ document.addEventListener("DOMContentLoaded", function () {
                     event.preventDefault();
 
 
-                    const header =
-                        document.querySelector(
-                            ".site-header"
-                        );
-
-
                     const headerHeight =
                         header
                             ? header.offsetHeight
                             : 0;
 
 
-                    const position =
+                    const offset =
+                        window.innerWidth <= 750
+                            ? 12
+                            : 18;
+
+
+                    const targetPosition =
                         target.getBoundingClientRect().top
                         +
                         window.scrollY
                         -
-                        headerHeight;
+                        headerHeight
+                        -
+                        offset;
 
 
                     window.scrollTo({
 
-                        top: position,
+                        top:
+                            Math.max(
+                                targetPosition,
+                                0
+                            ),
 
                         behavior: "smooth"
 
@@ -188,35 +249,204 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =================================================
-       VIDEO AUTOPLAY
+       REVEAL ANIMATIONS
     ================================================= */
 
-    document
-        .querySelectorAll("video")
-        .forEach(function (video) {
+    const revealElements =
+        document.querySelectorAll(
+            ".reveal-section"
+        );
 
-            video.muted = true;
 
-            video.playsInline = true;
+    if (
+        revealElements.length &&
+        "IntersectionObserver" in window
+    ) {
 
+        const observer =
+            new IntersectionObserver(
+                entries => {
+
+                    entries.forEach(entry => {
+
+                        if (
+                            entry.isIntersecting
+                        ) {
+
+                            entry.target.classList.add(
+                                "visible"
+                            );
+
+                            observer.unobserve(
+                                entry.target
+                            );
+
+                        }
+
+                    });
+
+                },
+                {
+                    threshold: 0.12,
+                    rootMargin: "0px 0px -60px 0px"
+                }
+            );
+
+
+        revealElements.forEach(element => {
+
+            observer.observe(element);
+
+        });
+
+    } else {
+
+        revealElements.forEach(element => {
+
+            element.classList.add(
+                "visible"
+            );
+
+        });
+
+    }
+
+
+    /* =================================================
+       VIDEO PLAYBACK
+    ================================================= */
+
+    const videos =
+        document.querySelectorAll("video");
+
+
+    videos.forEach(video => {
+
+        video.muted = true;
+
+        video.playsInline = true;
+
+
+        const playVideo = () => {
 
             const promise =
                 video.play();
 
 
-            if (promise !== undefined) {
+            if (
+                promise &&
+                typeof promise.catch === "function"
+            ) {
 
-                promise.catch(function () {
-
+                promise.catch(() => {
                     /*
-                     * Some mobile browsers can
-                     * temporarily block autoplay.
-                     *
-                     * The video remains available
-                     * as a normal HTML5 video.
+                     * Mobile browsers may block
+                     * autoplay temporarily.
                      */
 
                 });
+
+            }
+
+        };
+
+
+        playVideo();
+
+
+        document.addEventListener(
+            "visibilitychange",
+            () => {
+
+                if (
+                    document.visibilityState ===
+                    "visible"
+                ) {
+
+                    playVideo();
+
+                }
+
+            }
+        );
+
+    });
+
+
+    /* =================================================
+       VIDEO FEATURE INTERACTION
+    ================================================= */
+
+    const videoBox =
+        document.querySelector(".video-box");
+
+
+    if (videoBox) {
+
+        const video =
+            videoBox.querySelector("video");
+
+
+        const videoCenter =
+            videoBox.querySelector(".video-center");
+
+
+        if (
+            video &&
+            videoCenter
+        ) {
+
+            videoCenter.addEventListener(
+                "click",
+                () => {
+
+                    if (video.paused) {
+
+                        video.play();
+
+                    } else {
+
+                        video.pause();
+
+                    }
+
+                }
+            );
+
+        }
+
+    }
+
+
+    /* =================================================
+       IMAGE LOAD POLISH
+    ================================================= */
+
+    document
+        .querySelectorAll("img")
+        .forEach(img => {
+
+            if (img.complete) {
+
+                img.classList.add(
+                    "loaded"
+                );
+
+            } else {
+
+                img.addEventListener(
+                    "load",
+                    () => {
+
+                        img.classList.add(
+                            "loaded"
+                        );
+
+                    },
+                    {
+                        once: true
+                    }
+                );
 
             }
 
@@ -224,44 +454,45 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =================================================
-       HEADER SCROLL EFFECT
+       CLOSE MOBILE MENU WITH ESC
     ================================================= */
 
-    const header =
-        document.querySelector(".site-header");
+    document.addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.key === "Escape" &&
+                mobileMenu &&
+                mobileMenu.classList.contains("open")
+            ) {
+
+                mobileMenu.classList.remove(
+                    "open"
+                );
 
 
-    if (header) {
+                if (mobileMenuButton) {
 
-        function updateHeader() {
+                    mobileMenuButton.classList.remove(
+                        "active"
+                    );
 
-            if (window.scrollY > 30) {
+                    mobileMenuButton.setAttribute(
+                        "aria-expanded",
+                        "false"
+                    );
 
-                header.style.boxShadow =
-                    "0 10px 35px rgba(0,0,0,.07)";
+                    mobileMenuButton.setAttribute(
+                        "aria-label",
+                        "Open menu"
+                    );
 
-            } else {
-
-                header.style.boxShadow =
-                    "none";
+                }
 
             }
 
         }
-
-
-        updateHeader();
-
-
-        window.addEventListener(
-            "scroll",
-            updateHeader,
-            {
-                passive: true
-            }
-        );
-
-    }
-
+    );
 
 });
