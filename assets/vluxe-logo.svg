@@ -1,0 +1,190 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 800 800"
+     role="img"
+     aria-labelledby="title desc">
+
+  <title id="title">V Luxe Dental Atelier</title>
+
+  <desc id="desc">
+    V Luxe Dental Atelier gold dental emblem
+  </desc>
+
+  <defs>
+    <linearGradient id="gold"
+                    x1="0"
+                    y1="0"
+                    x2="1"
+                    y2="1">
+
+      <stop offset="0%"   stop-color="#8F641C"/>
+      <stop offset="28%"  stop-color="#C89B4A"/>
+      <stop offset="55%"  stop-color="#F0CC79"/>
+      <stop offset="78%"  stop-color="#B9852D"/>
+      <stop offset="100%" stop-color="#795216"/>
+
+    </linearGradient>
+  </defs>
+
+
+  <!-- WHITE EMBLEM -->
+
+  <circle
+      cx="400"
+      cy="400"
+      r="370"
+      fill="#FFFFFF"
+      stroke="url(#gold)"
+      stroke-width="15"
+  />
+
+  <circle
+      cx="400"
+      cy="400"
+      r="337"
+      fill="none"
+      stroke="#B48A42"
+      stroke-width="3"
+  />
+
+  <circle
+      cx="400"
+      cy="400"
+      r="322"
+      fill="none"
+      stroke="#D0B276"
+      stroke-width="2"
+  />
+
+
+  <!-- STYLISED TOOTH -->
+
+  <path
+      d="
+      M278 218
+      C300 193 332 188 365 201
+      C387 210 405 229 423 229
+      C444 229 459 207 484 208
+      C515 210 533 233 531 267
+      C529 300 511 328 493 351
+      C477 372 470 396 461 432
+      C452 469 437 510 414 512
+      C394 514 385 484 376 457
+      C369 437 361 424 349 424
+      C335 424 327 442 319 466
+      C310 494 301 516 280 511
+      C255 505 247 468 239 431
+      C231 395 220 366 203 339
+      C184 309 176 275 187 249
+      C198 222 222 207 250 210
+      C261 211 269 214 278 218
+      Z
+      "
+      fill="none"
+      stroke="url(#gold)"
+      stroke-width="18"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+  />
+
+
+  <!-- SMILE / V SWEEP -->
+
+  <path
+      d="
+      M278 313
+      C313 353 353 365 397 360
+      C438 355 474 329 501 292
+      "
+      fill="none"
+      stroke="url(#gold)"
+      stroke-width="10"
+      stroke-linecap="round"
+  />
+
+
+  <!-- LEFT ARROW -->
+
+  <path
+      d="
+      M278 313
+      L296 311
+      L288 328
+      "
+      fill="none"
+      stroke="url(#gold)"
+      stroke-width="8"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+  />
+
+
+  <!-- RIGHT SWEEP -->
+
+  <path
+      d="
+      M501 292
+      L492 310
+      L479 302
+      "
+      fill="none"
+      stroke="url(#gold)"
+      stroke-width="8"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+  />
+
+
+  <!-- LOGO BANNER -->
+
+  <path
+      d="
+      M115 425
+      L685 425
+      L655 555
+      L145 555
+      Z
+      "
+      fill="#FFFFFF"
+      stroke="url(#gold)"
+      stroke-width="7"
+  />
+
+  <path
+      d="M115 425 L685 425"
+      stroke="#B48A42"
+      stroke-width="3"
+  />
+
+
+  <!-- V LUXE -->
+
+  <text
+      x="400"
+      y="493"
+      text-anchor="middle"
+      font-family="Arial, Helvetica, sans-serif"
+      font-size="62"
+      font-weight="700"
+      letter-spacing="7"
+      fill="url(#gold)"
+  >
+      V LUXE
+  </text>
+
+
+  <!-- DENTAL ATELIER -->
+
+  <text
+      x="400"
+      y="529"
+      text-anchor="middle"
+      font-family="Arial, Helvetica, sans-serif"
+      font-size="18"
+      font-weight="700"
+      letter-spacing="8"
+      fill="#A77C38"
+  >
+      DENTAL ATELIER
+  </text>
+
+</svg>
